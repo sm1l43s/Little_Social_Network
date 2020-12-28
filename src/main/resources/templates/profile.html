@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Мой профиль</title>
+    <th:block th:insert="parts/includesFiles :: includesFiles"></th:block>
+</head>
+<body class="bg-light">
+
+<header th:insert="parts/header :: header"></header>
+
+<main role="main">
+
+    <div class="container-fluid mt-5">
+        <th:block th:insert="parts/messager :: messager"></th:block>
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div>
+                                <th:block th:switch="${user.getAvatar()} == ''">
+                                    <img th:case="false" class="rounded-circle img-thumbnail photoBorder" th:src="*{'data:image/jpeg;base64,'+ {user.getAvatar()} }" alt="">
+                                    <img th:case="true" src="https://picsum.photos/50/50" class="rounded-circle photoBorder" alt="profile image">
+                                </th:block>
+                                <h4 th:text="${user.getLastName()} + ' ' + ${user.getFirstName()}"></h4>
+                                <p class="text-muted mb-0" th:text="'Заходил ' + ${user.getLastEntered()}"></p>
+                                <input type="hidden" id="id_user_profile" th:value="${user.getId()}">
+                                <input type="hidden" id="isFollowing" th:value="${authUser.getUsersFollowing().contains(user)}">
+                            </div>
+                            <div class="row justify-content-center mt-3">
+                                <th:block th:if="${user} != ${authUser}">
+                                    <a id="follow" class="btn btn-sm w-25 btn-outline-info">Подписаться</a>
+                                    <a id="unfollow" class="btn btn-sm w-25 btn-outline-danger">Отписаться</a>
+                                </th:block>
+                            </div>
+
+                            <div class="row justify-content-center mt-3">
+                                <th:block th:if="${user} == ${authUser}">
+                                    <div class="row justify-content-center">
+                                        <div id="accordion" role="tablist">
+                                            <div class="card border-0">
+                                                <div class="card-text bg-white " role="tab" id="headingOne">
+                                                    <a data-toggle="collapse" class="text-info" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Установить аватар <i class="fas fa-caret-down"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div id="collapseOne" class="collapse hide" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body">
+                                                        <form action="/profile/setAvatar" method="post" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" name="avatar" class="custom-file-input">
+                                                                    <label class="custom-file-label" for="customFile">Выбрать изображение</label>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Установить</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                            <p class="mt-2 card-text">
+
+                            </p>
+                            <div class="border-top pt-3">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h6 id="post_count" th:text="${posts.size()}"></h6>
+                                        <p>Постов</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <th:block th:switch="${posts.size() != 0}">
+                                            <h6 id="like_count" th:case="true" th:text="${posts.get(0).countLikes(posts)}"></h6>
+                                            <h6 id="like_count" th:case="false">0</h6>
+                                        </th:block>
+                                        <p>Лайков</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <h6 id="followers_count" th:text="${user.getUsersFollowers().size()}"></h6>
+                                        <p>Подписчиков</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <h6 id="following_count" th:text="${user.getUsersFollowing().size()}"></h6>
+                                        <p>Подписан</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-3">
+
+                </div>
+
+                <div class="post col-6 my-3 p-3 bg-white">
+
+                    <th:block th:if="${user} == ${authUser}">
+                        <div class="card gedf-card">
+                            <form action="/profile/addPost" enctype="multipart/form-data" method="post">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Сделать публикацию</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Изображение</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="message">post</label>
+                                            <textarea class="form-control" name="message" id="message" rows="3" placeholder="О чем вы думаете?"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Выбрать изображение</label>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                                <div class="btn-toolbar justify-content-between">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-primary">Поделится</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </th:block>
+
+                    <!--- Post-->
+                        <th:block th:insert="parts/posts :: posts"></th:block>
+                    <!-- Post end-->
+                </div>
+
+                <div class="right_bar col-3">
+                    <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <h6 class="border-bottom border-gray pb-2 mb-0">Возможно Вы знакомы</h6>
+                        <th:block th:each="suggestionUser : ${suggestions}">
+                            <div class="media text-muted pt-3">
+                                <th:block th:switch="${suggestionUser.getAvatar() == ''}">
+                                    <img th:case="false" class="rounded-sm mr-2 img-thumbnail photoBorderForPost" th:src="*{'data:image/jpeg;base64,'+ {suggestionUser.getAvatar()} }" alt="">
+                                    <img th:case="true" src="https://picsum.photos/50/50" class="rounded-sm mr-2 photoBorderForPost" alt="profile image">
+                                </th:block>
+                                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <a th:href="'/profile/' + ${suggestionUser.getId()}">
+                                            <strong class="text-gray-dark" th:text="${suggestionUser.getLastName()} +
+                                             ' ' + ${suggestionUser.getFirstName()}">Full Name</strong>
+                                        </a>
+                                    </div>
+                                    <span class="d-block" th:text="${suggestionUser.getUsersFollowers().size()} + ' подписчиков'"></span>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<div th:insert="parts/footer :: footer"></div>
+<script src="/js/util.js"></script>
+<script src="/js/liked.js"></script>
+<script src="/js/follow.js"></script>
+<script src="/js/comment.js"></script>
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/chat.js"></script>
+</html>

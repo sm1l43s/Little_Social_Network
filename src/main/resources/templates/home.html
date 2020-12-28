@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Главная страница</title>
+    <th:block th:insert="parts/includesFiles :: includesFiles"></th:block>
+</head>
+<body>
+
+    <header th:insert="parts/header :: header"></header>
+
+    <main role="main">
+
+        <div class="container-fluid">
+
+            <th:block th:insert="parts/messager :: messager"></th:block>
+
+            <div class="row">
+                <div class="col-3">
+
+                </div>
+
+                <div class="col-6">
+                    <div class="post my-3 p-3 bg-white">
+                        <!--- Post-->
+                        <th:block th:insert="parts/posts :: posts"></th:block>
+                        <!-- Post end-->
+                    </div>
+                </div>
+
+                <div class="col-3">
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div th:insert="parts/footer :: footer"></div>
+    <script src="/js/util.js"></script>
+    <script src="/js/liked.js"></script>
+    <script src="/js/comment.js"></script>
+</body>
+<script src="/js/chat.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</html>

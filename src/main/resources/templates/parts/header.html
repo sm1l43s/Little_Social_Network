@@ -1,0 +1,27 @@
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="'/profile/' + ${authUser.getId()}">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Стена</a>
+                </li>
+                <li class="nav-item">
+                        <label class="side-button-1" for="side-checkbox">
+                            <span class="side-b side-open nav-link">Сообщения</span>
+                            <span class="side-b side-close nav-link">Закрыть</span>
+                        </label>
+                </li>
+            </ul>
+            <input type="hidden" id="from" th:value="${authUser.getLastName()} + ' ' + ${authUser.getFirstName()}">
+            <form class="form-inline mx-auto my-2 col-4 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <a class="btn btn-outline-info" onclick="disconnect()" href="/logout">Выйти</a>
+        </div>
+    </nav>
+</div>
+

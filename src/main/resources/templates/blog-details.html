@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<header th:insert="parts/header :: header"></header>
+
+<div class="container mt-5">
+    <div class="alert alert-info">
+        <h3 th:text="${post.getTitle()}"></h3>
+        <p th:text="${post.getFullText()}"></p>
+        <p th:text="${post.getViews()}"></p>
+        <a th:href="'/blog/'+ ${post.getId()} + '/remove'" class="btn btn-warning">Удалить</a>
+        <a th:href="'/blog/'+ ${post.getId()} + '/edit'" class="btn btn-info">Редактировать</a>
+    </div>
+</div>
+
+<div th:insert="parts/footer :: footer"></div>
+
+</body>
+</html>

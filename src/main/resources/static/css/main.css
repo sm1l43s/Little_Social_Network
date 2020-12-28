@@ -1,0 +1,249 @@
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+<!-- Login -->
+
+<!-- -->
+
+<!-- Profile -->
+.container {
+    margin-top: 50px
+}
+
+.stretch-card>.card {
+    width: 100%;
+    min-width: 100%
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #d2d2dc;
+    border-radius: 0
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #3da5f4;
+    border-color: #3da5f4
+}
+
+.btn {
+    font-size: 0.875rem;
+    line-height: 1;
+    font-weight: 400;
+    padding: .7rem 1.5rem;
+    border-radius: 0.1275rem
+}
+
+h6 {
+    font-size: .9375rem
+}
+
+/*-- Content Style --*/
+.post-footer-option li{
+    float:left;
+    margin-right:50px;
+    padding-bottom:15px;
+}
+
+.post-footer-option li a{
+    color:#AFB4BD;
+    font-weight:500;
+    font-size:1.3rem;
+}
+
+.photo-profile{
+    border:1px solid #DDD;
+}
+
+.anchor-username h4{
+    font-weight:bold;
+}
+
+.anchor-time{
+    color:#ADB2BB;
+    font-size:1.2rem;
+}
+
+.post-footer-comment-wrapper{
+    background-color:#F6F7F8;
+}
+
+.h7 {
+    font-size: 0.8rem;
+}
+
+.gedf-wrapper {
+    margin-top: 0.97rem;
+}
+
+@media (min-width: 992px) {
+    .gedf-main {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+    .gedf-card {
+        margin-bottom: 2.77rem;
+    }
+}
+
+/**Reset Bootstrap*/
+.dropdown-toggle::after {
+    content: none;
+    display: none;
+}
+
+.photoBorder {
+    width: 100px;
+    height: 100px;
+    background-repeat     : no-repeat;
+    background-size       : cover;
+    background-position-x : 50%;
+    background-position-y : 50%;
+}
+
+.photoBorderForPost {
+    width: 45px;
+    height: 45px;
+    background-repeat     : no-repeat;
+    background-size       : cover;
+    background-position-x : 50%;
+    background-position-y : 50%;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+#messager, #users {
+    width: 100%;
+    height: 80vh;
+}
+
+#contentContainer {
+    height: 65vh;
+    overflow: auto;
+}
+
+#users {
+    overflow: auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+ul > li {
+    cursor: pointer;
+}
+
+/* Оформление панели */
+#side-checkbox {
+    display: none;
+}
+.side-panel {
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    left: -760px;
+    background: #343a40;
+    transition: all 0.5s;
+    width: 720px;
+    height: 100vh;
+    box-shadow: 10px 0 20px rgba(0,0,0,0.4);
+    color: #FFF;
+    padding: 40px 20px;
+}
+.side-title {
+    font-size: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #BFE2FF;
+}
+/* Оформление кнопки на странице */
+.side-button-1 {
+    cursor: pointer;
+}
+/* Переключатели кнопки 1 */
+.side-button-1 .side-close {
+    display: none;
+}
+#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-open {
+    display: none;
+}
+#side-checkbox:checked + .side-panel + .side-button-1-wr .side-button-1 .side-close {
+    display: block;
+}
+#side-checkbox:checked + .side-panel {
+    left: 0;
+}
+/* Оформление кнопки на панеле */
+.side-button-2 {
+    font-size: 30px;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transform: rotate(45deg);
+    color: #BFE2FF;
+    transition: all 280ms ease-in-out;
+}
+.side-button-2:hover {
+    transform: rotate(45deg) scale(1.1);
+    color: #FFF;
+}
+
+/**/
+
+.msg_container{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    font-size: 12px;
+    border-radius: 25px;
+    background-color: #82ccdd;
+    padding: 10px;
+    position: relative;
+}
+.msg_container_send{
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 12px;
+    margin-right: 10px;
+    border-radius: 25px;
+    background-color: #78e08f;
+    padding: 10px;
+    position: relative;
+}
+
+.msg_time{
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8em;
+}
+.msg_time_send{
+    position: absolute;
+    right:0;
+    bottom: -15px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8em;
+}
+

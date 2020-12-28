@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://use.fontawesome.com/f19b955683.js"></script>
+</head>
+<body class="text-center login-page">
+    <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+        <div class="card shadow p-3 mb-5 bg-light rounded">
+            <div class="card-body">
+                <form class="form-signin" method="post" action="/login">
+                    <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+                    <div class="alert">
+                        <div class="alert alert-success" th:if="${logout}">
+                            Выход выполнен успешно.
+                        </div>
+                        <div class="alert alert-danger" th:if="${signError}">
+                            Ошибка входа в систему.<br>
+                            Проверьте логин или пароль!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="sr-only">Email адрес</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email адрес" required="" autofocus="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="sr-only">Пароль</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required="">
+                    </div>
+                    <div class="mb-3">
+                        <a href="/registration" class="btn-link">Создать аккаунт</a>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-block" type="submit">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
