@@ -16,10 +16,6 @@
                 </li>
             </ul>
             <input type="hidden" id="from" th:value="${authUser.getLastName()} + ' ' + ${authUser.getFirstName()}">
-            <form class="form-inline mx-auto my-2 col-4 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
             <a class="btn btn-outline-info" onclick="disconnect()" href="/logout">Выйти</a>
         </div>
     </nav>
