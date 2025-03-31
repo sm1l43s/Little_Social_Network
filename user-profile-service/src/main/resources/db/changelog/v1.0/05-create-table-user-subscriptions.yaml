@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user-subscriptions
+      comment: Create table user_subscriptions
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: user_subscriptions
+      author: Artem
+      changes:
+        - createTable:
+            tableName: user_subscriptions
+            columns:
+              - column:
+                  name: user_id
+                  type: uuid
+              - column:
+                  name: subscribed_user_id
+                  type: uuid
+          addPrimaryKey:
+            tableName: user_subscriptions
+            columnNames: user_id, subscribed_user_id

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="https://use.fontawesome.com/f19b955683.js"></script>
+</head>
+<body class="login-page">
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+    <div class="card shadow p-3 mb-5 bg-light rounded col-3">
+        <div class="card-body">
+            <form method="post" action="/social-network/auth/sign-up" th:object="${userInput}">
+                <h1 class="h3 mb-3 font-weight-normal text-center">Регистрация</h1>
+                <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <p style="color: red;" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                    <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Фамилия"
+                           required th:field="*{lastName}">
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">Имя</label>
+                    <p style="color: red;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                    <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Имя" required
+                           th:field="*{firstName}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <p style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                    <input type="text" name="email" class="form-control" id="email" placeholder="E-mail" required
+                           th:field="*{email}">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <p style="color: red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Пароль" required
+                           th:field="*{password}">
+                </div>
+
+                <div class="form-group">
+                    <label for="password_repeat">Повторите пароль</label>
+                    <p style="color: red;" th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}"></p>
+                    <input type="password" name="password_repeat" class="form-control" id="password_repeat"
+                           placeholder="Повторный пароль" required th:field="*{passwordRepeat}">
+                </div>
+
+                <div style="color: red;" th:if="${#fields.hasGlobalErrors()}">
+                    <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+                </div>
+
+                <div style="color: red; text-align: center;" th:if="${errorMessage}">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-table-comments-checks
+      author: Artem
+      changes:
+        - sql:
+            dbms: mysql
+            splitStatements: false
+            sql: |
+                -- user_id (UUID) pattern constraint
+                ALTER TABLE comments
+                ADD CONSTRAINT chk_comments_user_id_uuid 
+                CHECK (user_id REGEXP '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$');

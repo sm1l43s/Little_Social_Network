@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-comments
+      comment: Add records to table comments
+      author: Artem
+      changes:
+        - loadData:
+            file: db/changelog/v1.0/comments_data.csv
+            separator: ","
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+              - column:
+                  name: user_id
+                  type: char
+              - column:
+                  name: post_id
+                  type: bigint
+              - column:
+                  name: message
+                  type: varchar
+              - column:
+                  name: date
+                  type: varchar
+              - column:
+                  name: time
+                  type: varchar

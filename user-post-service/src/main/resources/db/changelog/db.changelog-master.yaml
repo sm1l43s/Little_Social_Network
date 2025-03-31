@@ -1,0 +1,40 @@
+databaseChangeLog:
+  # Create table user_profiles
+  - include:
+      file: db/changelog/v1.0/01-create-table-posts.yaml
+
+  # Add table posts checks
+  - include:
+      file: db/changelog/v1.0/02-add-table-posts-checks.yaml
+
+  # Add table user_profiles triggers
+  - include:
+      file: db/changelog/v1.0/03-add-table-posts-triggers.yaml
+
+  # Insert data to table posts
+  - include:
+      file: db/changelog/v1.0/04-insert-table-posts.yaml
+
+  # Create table comments
+  - include:
+      file: db/changelog/v1.0/05-create-table-comments.yaml
+
+  # Add table comments checks
+  - include:
+      file: db/changelog/v1.0/06-add-table-comments-checks.yaml
+
+  # Add table comments triggers
+  - include:
+      file: db/changelog/v1.0/07-add-table-comments-triggers.yaml
+
+  # Insert data to table comments
+  - include:
+      file: db/changelog/v1.0/08-insert-table-comments.yaml
+
+  # Create table posts_likes
+  - include:
+      file: db/changelog/v1.0/09-create-table-posts-likes.yaml
+
+  # Insert data to table posts_likes
+  - include:
+      file: db/changelog/v1.0/10-insert-table-posts-likes.yaml

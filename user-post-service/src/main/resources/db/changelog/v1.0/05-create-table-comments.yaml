@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-comments
+      comment: Create table comments
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: comments
+      author: Artem
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                  autoIncrement: true
+              - column:
+                  name: user_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: clob
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time
+                  type: time
+                  constraints:
+                    nullable: false
+          addForeignKeyConstraint:
+            constraintName: fk_comments_posts
+            baseTableName: comments
+            baseColumnNames: post_id
+            referencedTableName: posts
+            referencedColumnNames: id
+            onDelete: CASCADE
+

@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-posts-likes
+      comment: Add records to table posts_likes
+      author: Artem
+      changes:
+        - loadData:
+            file: db/changelog/v1.0/posts_likes_data.csv
+            separator: ","
+            tableName: posts_likes
+            columns:
+              - column:
+                  name: user_id
+                  type: char
+              - column:
+                  name: post_id
+                  type: bigint

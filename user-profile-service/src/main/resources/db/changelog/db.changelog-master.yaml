@@ -1,0 +1,24 @@
+databaseChangeLog:
+  # Create table user_profiles
+  - include:
+      file: db/changelog/v1.0/01-create-table-user-profiles.yaml
+
+  # Add table user_profiles checks
+  - include:
+      file: db/changelog/v1.0/02-add-table-user-profiles-checks.yaml
+
+  # Add table user_profiles triggers
+  - include:
+      file: db/changelog/v1.0/03-add-table-user-profiles-triggers.yaml
+
+  # Insert data to table users
+  - include:
+      file: db/changelog/v1.0/04-insert-table-user-profiles.yaml
+
+  # Create table user_subscriptions
+  - include:
+      file: db/changelog/v1.0/05-create-table-user-subscriptions.yaml
+
+  # Insert data to table users_subscriptions
+  - include:
+      file: db/changelog/v1.0/06-insert-table-user-subscriptions.yaml

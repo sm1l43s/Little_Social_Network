@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-user-profiles
+      comment: Add records to table user_profiles
+      author: Artem
+      changes:
+        - loadData:
+            file: db/changelog/v1.0/user_profiles_data.csv
+            separator: ","
+            tableName: user_profiles
+            columns:
+              - column:
+                  name: id
+                  type: varchar
+              - column:
+                  name: first_name
+                  type: varchar
+              - column:
+                  name: last_name
+                  type: varchar
+              - column:
+                  name: email
+                  type: varchar
+              - column:
+                  name: avatar_url
+                  type: varchar
+              - column:
+                  name: registration_date
+                  type: datetime
+              - column:
+                  name: last_entered
+                  type: datetime
