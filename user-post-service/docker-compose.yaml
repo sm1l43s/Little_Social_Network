@@ -1,0 +1,38 @@
+version: '3.9'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:9.2.0
+    container_name: user-post-service-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_post_service_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      TZ: Europe/Moscow
+    command:
+      --log-bin
+      --log-bin-trust-function-creators=1
+      --default-time-zone='Europe/Moscow'
+    ports:
+      - "3309:3306"
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9090:9090"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9090"
+
+volumes:
+  minio_data:
+    driver: local

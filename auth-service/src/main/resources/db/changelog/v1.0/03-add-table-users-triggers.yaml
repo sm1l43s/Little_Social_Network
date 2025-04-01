@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-table-users-triggers
+      author: Artem
+      changes:
+        - sql:
+            dbms: mysql
+            splitStatements: false
+            sql: |
+              -- Trigger checks the correctness of the registration and last login dates when inserting
+              CREATE TRIGGER check_users_dates_insert BEFORE INSERT ON users
+              FOR EACH ROW
+              BEGIN
+                IF NEW.registration_date > NOW() THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'registration_date must not be later than NOW()';
+                END IF;
+              
+                IF NEW.last_entered > NOW() THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'last_entered must not be later than NOW()';
+                END IF;
+              
+                IF NEW.last_entered < NEW.registration_date THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'last_entered must not be earlier than registration_date';
+                END IF;
+              END;
+              
+              -- Trigger checks the correctness of the last entered date when updating
+              CREATE TRIGGER check_users_last_entered_update BEFORE UPDATE ON users
+              FOR EACH ROW
+              BEGIN             
+                IF NEW.last_entered > NOW() THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'last_entered must not be later than NOW()';
+                END IF;
+              
+                IF NEW.last_entered < NEW.registration_date THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'last_entered must not be earlier than registration_date';
+                END IF;
+              END;
+              
+              -- Trigger prevents changes to the registration_date
+              CREATE TRIGGER prevent_registration_date_update BEFORE UPDATE ON users
+              FOR EACH ROW
+              BEGIN
+                  IF NEW.registration_date <> OLD.registration_date THEN
+                      SIGNAL SQLSTATE '45000'
+                      SET MESSAGE_TEXT = 'registration_date must not be changed';
+                  END IF;
+              END;

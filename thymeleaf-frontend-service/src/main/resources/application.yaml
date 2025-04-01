@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: thymeleaf-frontend-service
+  servlet:
+    multipart:
+      max-file-size: 15MB
+
+server:
+  port: 8080
+  servlet:
+    context-path: ${CONTEXT_APPLICATION:/social-network}
+
+controller:
+  endpoints:
+    home:
+      base-path: /home
+
+    auth:
+      base-path: /auth
+      mappings:
+        sign-up: /sign-up
+        sign-in: /sign-in
+        logout: /logout
+
+    user-profile:
+      base-path: /user-profile
+      mappings:
+        set-avatar: /set-avatar
+
+    posts:
+      base-path: /posts
+      mappings:
+        add-post: /add-post
+        edit-post: /edit-post
+        delete-post: /delete-post
+        add-comment: /add-comment
+
+service-locations:
+  auth-service:
+    url: ${AUTH_SERVICE_HOST:http://localhost}:${AUTH_SERVICE_PORT:8081}${AUTH_SERVICE_CONTEXT:/auth-service/api/v1}
+    endpoints:
+      auth:
+        base-url: ${service-locations.auth-service.url}/auth
+        mappings:
+          sign-up: ${service-locations.auth-service.endpoints.auth.base-url}/sign-up
+          sign-in: ${service-locations.auth-service.endpoints.auth.base-url}/sign-in
+          logout: ${service-locations.auth-service.endpoints.auth.base-url}/logout
+
+  user-profile-service:
+    url: ${USER_PROFILE_SERVICE_HOST:http://localhost}:${USER_PROFILE_SERVICE_PORT:8082}${USER_PROFILE_SERVICE_CONTEXT:/user-profile-service/api/v1}
+    endpoints:
+      user-profiles:
+        base-url: ${service-locations.user-profile-service.url}/user-profiles
+        mappings:
+          set-avatar: ${service-locations.user-profile-service.endpoints.user-profiles.base-url}/set-avatar
+          suggestions: ${service-locations.user-profile-service.endpoints.user-profiles.base-url}/suggestions
+
+  user-post-service:
+    url: ${USER_POST_SERVICE_HOST:http://localhost}:${USER_POST_SERVICE_PORT:8083}${USER_POST_SERVICE_CONTEXT:/user-post-service/api/v1}
+    endpoints:
+      posts:
+        base-url: ${service-locations.user-post-service.url}/posts
+        mappings:
+          by-subscriptions: ${service-locations.user-post-service.endpoints.posts.base-url}/by-subscriptions
+          add-comment: ${service-locations.user-post-service.endpoints.posts.base-url}/add-comment

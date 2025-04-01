@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-posts
+      comment: Add records to table posts
+      author: Artem
+      changes:
+        - loadData:
+            file: db/changelog/v1.0/posts_data.csv
+            separator: ","
+            tableName: posts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+              - column:
+                  name: user_id
+                  type: char
+              - column:
+                  name: message
+                  type: varchar
+              - column:
+                  name: image_url
+                  type: varchar
+              - column:
+                  name: date
+                  type: varchar
+              - column:
+                  name: time
+                  type: varchar

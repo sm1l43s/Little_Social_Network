@@ -1,0 +1,63 @@
+server:
+  port: 8083
+  servlet:
+    context-path: ${CONTEXT_APPLICATION:/user-post-service/api/v1}
+
+spring:
+  application:
+    name: user-post-service
+  servlet:
+    multipart:
+      max-file-size: 15MB
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3309}/${DB_NAME:user_post_service_db}?${DB_PARAMETERS:serverTimezone=Europe/Moscow&allowMultiQueries=true}
+    username: ${DB_USER:user}
+    password: ${DB_PASSWORD:pass}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+security:
+  jwt:
+    key: ${SECRET_KEY:71de977c48b58624648f36090a422127}
+
+  open-paths:
+    GET:
+      - ${controller.endpoints.posts.base-path}/*
+
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: post-images
+  policy-file: minio-policy.json
+
+controller:
+  endpoints:
+    posts:
+      base-path: /posts
+      mappings:
+        by-subscriptions: /by-subscriptions
+        add-comment: /add-comment
+
+service-locations:
+  user-profile-service:
+    url: ${USER_PROFILE_SERVICE_HOST:http://localhost}:${USER_PROFILE_SERVICE_PORT:8082}${USER_PROFILE_SERVICE_CONTEXT:/user-profile-service/api/v1}
+    endpoints:
+      user-profiles:
+        base-url: ${service-locations.user-profile-service.url}/user-profiles
+        mappings:
+          info-mapped-by-id: /info-mapped-by-id
+
+allowed-requests-from-services:
+  service-locations:
+    thymeleaf-frontend-service:
+      name: thymeleaf-frontend-service
+      ip: ${THYMELEAF_FRONTEND_SERVICE_LOCATION:127.0.0.1}

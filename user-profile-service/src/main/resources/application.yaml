@@ -1,0 +1,69 @@
+server:
+  port: 8082
+  servlet:
+    context-path: ${CONTEXT_APPLICATION:/user-profile-service/api/v1}
+
+spring:
+  application:
+    name: user-profile-service
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3308}/${DB_NAME:user_profile_service_db}?${DB_PARAMETERS:serverTimezone=Europe/Moscow&allowMultiQueries=true}
+    username: ${DB_USER:user}
+    password: ${DB_PASSWORD:pass}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: avatars
+  default-avatar-name: default-avatar.png
+  default-avatar-url: ${minio.url}/${minio.bucket-name}/${minio.default-avatar-name}
+  policy-file: minio-policy.json
+
+security:
+  jwt:
+    key: ${SECRET_KEY:71de977c48b58624648f36090a422127}
+  open-paths:
+    GET:
+      - ${controller.endpoints.user-profiles.base-path}/*
+      - ${controller.endpoints.user-profiles.base-path}${controller.endpoints.user-profiles.mappings.info-mapped-by-id}
+    POST:
+      - ${controller.endpoints.user-profiles.base-path}
+      - ${controller.endpoints.user-profiles.base-path}${controller.endpoints.user-profiles.mappings.update-last-entered}
+
+controller:
+  endpoints:
+    user-profiles:
+      base-path: /user-profiles
+      mappings:
+        update-last-entered: /update-last-entered
+        set-avatar: /set-avatar
+        subscribe: /subscribe
+        unsubscribe: /unsubscribe
+        info-mapped-by-id: /info-mapped-by-id
+        suggestions: /suggestions
+
+allowed-requests-from-services:
+  service-locations:
+    auth-service:
+      name: auth-service
+      ip: ${AUTH_SERVICE_LOCATION:127.0.0.1}
+    user-post-service:
+      name:  user-post-service
+      ip: ${USER_POST_SERVICE_LOCATION:127.0.0.1}
+    thymeleaf-frontend-service:
+      name: thymeleaf-frontend-service
+      ip: ${THYMELEAF_FRONTEND_SERVICE_LOCATION:127.0.0.1}

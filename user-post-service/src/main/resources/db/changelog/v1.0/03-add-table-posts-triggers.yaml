@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-table-posts-triggers
+      author: Artem
+      changes:
+        - sql:
+            dbms: mysql
+            splitStatements: false
+            sql: |
+              -- Trigger checks the correctness of the date and time when inserting
+              CREATE TRIGGER check_posts_date_insert BEFORE INSERT ON posts
+              FOR EACH ROW
+              BEGIN
+                IF NEW.date > CURRENT_DATE() THEN
+                    SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'date must not be later than CURRENT_DATE()';
+                END IF;
+              END;
+              
+              -- Trigger prevents changes to the date
+              CREATE TRIGGER prevent_posts_date_update BEFORE UPDATE ON posts
+              FOR EACH ROW
+              BEGIN
+                  IF NEW.date <> OLD.date THEN
+                      SIGNAL SQLSTATE '45000'
+                      SET MESSAGE_TEXT = 'date must not be changed';
+                  END IF;
+              END;
+              
+              -- Trigger prevents changes to the date
+              CREATE TRIGGER prevent_posts_time_update BEFORE UPDATE ON posts
+              FOR EACH ROW
+              BEGIN
+                  IF NEW.time <> OLD.time THEN
+                      SIGNAL SQLSTATE '45000'
+                      SET MESSAGE_TEXT = 'time must not be changed';
+                  END IF;
+              END;

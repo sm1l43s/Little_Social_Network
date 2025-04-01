@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-table-user-profiles-checks
+      author: Artem
+      changes:
+        - sql:
+            dbms: mysql
+            splitStatements: false
+            sql: |
+                -- id (UUID) pattern constraint
+                ALTER TABLE user_profiles 
+                ADD CONSTRAINT chk_user_profiles_id_uuid 
+                CHECK (id REGEXP '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$');
+              
+                -- email pattern constraint
+                ALTER TABLE user_profiles 
+                ADD CONSTRAINT chk_user_profiles_email 
+                CHECK (email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');

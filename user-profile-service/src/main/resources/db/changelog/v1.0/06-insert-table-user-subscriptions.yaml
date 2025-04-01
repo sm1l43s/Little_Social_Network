@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-user-profiles
+      comment: Add records to table user_subscriptions
+      author: Artem
+      changes:
+        - loadData:
+            file: db/changelog/v1.0/user_subscriptions_data.csv
+            separator: ","
+            tableName: user_subscriptions
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar
+              - column:
+                  name: subscribed_user_id
+                  type: varchar

@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-users
+      comment: Create table users
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: users
+      author: Artem
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                  defaultValueComputed: (uuid())
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: enum('USER')
+                  constraints:
+                    nullable: false
+              - column:
+                  name: registration_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: NOW()
+              - column:
+                  name: last_entered
+                  type: datetime
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: NOW()

@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user-profiles
+      comment: Create table user_profiles
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: user_profiles
+      author: Artem
+      changes:
+        - createTable:
+            tableName: user_profiles
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: avatar_url
+                  type: varchar(2083)
+              - column:
+                  name: registration_date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_entered
+                  type: datetime
+                  constraints:
+                    nullable: false
